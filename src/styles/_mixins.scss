@@ -1,0 +1,3 @@
+@mixin theme($property, $key) {
+  #{$property}: map-get($theme, $key);
+}
