@@ -11,17 +11,3 @@
     <p>En esta sección podrás visualizar los horarios de los grupos, materias, maestros y salones.</p>
   </div>
 </main>
-
-<style lang="scss">
-  main {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  .content {
-    padding: 1.5rem;
-    overflow: auto;
-  }
-</style>
