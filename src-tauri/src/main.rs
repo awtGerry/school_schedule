@@ -1,15 +1,24 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+use crate::class::subjects::{get_subjects, create_subject};
+use crate::db::{AppState, connect};
+use tauri::Manager as _; // Necesario para poder usar manage()
 
-fn main() {
-    tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
-        .run(tauri::generate_context!())
+mod db;
+mod class;
+
+#[tokio::main]
+async fn main() {
+    let app = tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![
+            create_subject,
+            get_subjects
+        ])
+        .build(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    let pool = connect(&app).await;
+    app.manage(AppState { db: pool });
+    app.run(|_, _| {});
 }
