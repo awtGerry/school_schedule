@@ -20,7 +20,6 @@ $light-theme: (
   bg-color: #faf4ed, // Color de fondo
   fg-color: #575279, // Color de primer plano
   nav-bg-color: #fffaf3,
-  nav-fg-color: #575279,
 );
 
 // Tema oscuro
@@ -28,7 +27,6 @@ $dark-theme: (
   bg-color: #191724, // Color de fondo
   fg-color: #e0def4, // Color de primer plano
   nav-bg-color: #1f1d2e,
-  nav-fg-color: #908caa,
 );
 
 $theme: $light-theme;

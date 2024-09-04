@@ -21,13 +21,14 @@
       data-menu={item.menu}
       data-icon={item.icon}
       data-name={item.name}
+      on:click={() => createWindow(item.menu)}
     >
       <img src={item.icon} alt={item.name} />
       {#if !isCollapsed}
         <span>{item.name}</span>
       {/if}
       {#if item.submenu.length > 0}
-        <span class="arrow-container absolute right-0 mr-2 w-2 h-2">
+        <span class="arrow-container">
           <img src="/icons/right-arrow.svg" alt="Arrow" />
         </span>
       {/if}
@@ -51,10 +52,3 @@
   </div>
 {/each}
 
-<style lang="scss">
-  .separator {
-    height: 2px;
-    background-color: #ccc;
-    margin: 6px 0;
-  }
-</style>

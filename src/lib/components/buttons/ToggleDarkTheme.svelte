@@ -1,21 +1,48 @@
 <script lang="ts">
-  // Checar en localStorage el tema del usuario
-  let isDarkMode = localStorage.getItem("theme") === "dark";
+  let selectedTheme = localStorage.getItem("theme") || "system";
 
-  // Función para cambiar el tema dependiendo del actual
-  const toggleDarkMode = () => {
-    isDarkMode = !isDarkMode;
-    document.body.classList.toggle("dark", isDarkMode);
-    // Guardar el tema en localStorage
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+  // Función para cambiar el tema (light, dark, system)
+  const changeTheme = (event: Event) => {
+    const theme = (event.target as HTMLSelectElement).value;
+
+    if (theme === "light") {
+      document.body.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    } else if (theme === "dark") {
+      document.body.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else if (theme === "system") {
+      document.body.classList.remove("dark");
+      localStorage.removeItem("theme");
+      applySystemTheme();
+    }
   };
 
-  // Aplicar el tema al cargar la página
-  if (isDarkMode) {
+  // Función para aplicar el tema del sistema
+  const applySystemTheme = () => {
+    const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // matches regresa true si el tema del sistema es dark
+    if (darkModeMediaQuery.matches) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  };
+
+  // Inicializar el tema al cargar la página
+  const storedTheme = localStorage.getItem("theme");
+  if (storedTheme === "dark") {
     document.body.classList.add("dark");
+  } else if (storedTheme === "light") {
+    document.body.classList.remove("dark");
+  } else {
+    applySystemTheme();
   }
 </script>
 
-<button on:click={toggleDarkMode}>
-  {isDarkMode ? "Light" : "Dark"} mode
-</button>
+<select on:change={changeTheme} bind:value={selectedTheme}>
+  <option value="light">Tema claro</option>
+  <option value="dark">Tema oscuro</option>
+  <option value="system">Sistema</option>
+</select>
