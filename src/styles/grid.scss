@@ -66,3 +66,33 @@
     }
   }
 }
+
+.subjects-details {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+
+  .color {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    place-items: center;
+    width: 120px;
+    height: 100px;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    min-width: 480px;
+
+    body.dark & {
+      background-color: map-get($dark-theme, nav-bg-color);
+      color: map-get($dark-theme, fg-color);
+    }
+  }
+}

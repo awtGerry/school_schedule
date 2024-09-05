@@ -1,9 +1,10 @@
 <script lang="ts">
   import "$styles/form.scss";
+  import { invoke } from "@tauri-apps/api";
+  import { emit } from "@tauri-apps/api/event";
   import { onMount } from "svelte";
   import TableComponent from "$lib/components/tables/TableComponent.svelte";
   import NewSubject from "./NewSubject.svelte";
-
   import { subjects, loadSubjects, type SubjectItem } from "$lib/modules/entities/subjectsStore";
 
   // Carga las materias desde la base de datos en rust
@@ -18,22 +19,58 @@
     { name: "Tipo", key: "spec" },
   ];
 
+  let editShown = false;
+  let editItem: SubjectItem | null = null;
+  const handleEdit = (item: SubjectItem) => {
+    editShown = !editShown;
+    editItem = item;
+  };
+
   const actions = [
-    { name: "Editar", action: (item: SubjectItem) => console.log("Edit", item) },
-    { name: "Eliminar", action: (item: SubjectItem) => console.log("Delete", item) },
+    { name: "Editar", action: (item: SubjectItem) => {
+      handleEdit(item);
+    }},
+    { name: "Eliminar", action: (item: SubjectItem) => {
+      // TODO: Implementar confirmación desde el componente en vez de un alert (como si fuera un tooltip)
+      let confirm = window.confirm("¿Estás seguro de que quieres eliminar esta materia?");
+      if (!confirm) return;
+      invoke("delete_subject", { id: item.id }).then(loadSubjects);
+      emit("subjects_updated");
+    }},
   ];
 
-  let newClicked = false;
+  let newShown = false;
   const handleNew = () => {
-    newClicked = !newClicked;
+    newShown = !newShown;
   };
 </script>
 
 <section class="form-container">
-  <span class="title">Materias</span>
-  <button on:click={handleNew}>Nueva Materia</button>
-  <TableComponent data={$subjects} {columns} {actions} />
-  {#if newClicked}
-    <NewSubject />
+  <div class="title">
+    <img src="/icons/books.svg" alt="Materias" />
+    <span>Materias</span>
+  </div>
+  <div class="divider"></div>
+  <div class="controls">
+    <div class="controls-left">
+      <button class="new-button" on:click={handleNew}>
+        <img src="/icons/plus.svg" alt="Agregar materia" />
+        Agregar nueva materia
+      </button>
+    </div>
+    <div class="controls-right">
+      <!-- <input class="search" type="text" placeholder="Buscar materia" /> -->
+      <div class="search">
+        <input type="text" placeholder="Buscar materia" />
+        <img src="/icons/search.svg" alt="Buscar" />
+      </div>
+    </div>
+  </div>
+  {#if newShown}
+    <NewSubject item={null} />
   {/if}
+  {#if editShown}
+    <NewSubject item={editItem} />
+  {/if}
+  <TableComponent data={$subjects} {columns} {actions} />
 </section>

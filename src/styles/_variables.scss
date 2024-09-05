@@ -14,6 +14,9 @@ $blue: $primary-color;
 $red: $secondary-color;
 $gold: $other-color;
 
+$filter-primary: invert(17%) sepia(97%) saturate(1878%) hue-rotate(196deg) brightness(97%) contrast(101%);
+$filter-secondary: invert(13%) sepia(87%) saturate(7416%) hue-rotate(329deg) brightness(65%) contrast(101%);
+
 /* Definir colores por tema */
 // Tema claro
 $light-theme: (

@@ -4,46 +4,91 @@
 /* --------------------
  * Estilo para las tablas de la aplicación (forms)
  * -------------------- */
-// TODO: Agregar temas para las tablas
-table {
-  color: black;
-  background-color: white;
-  border-color: black;
-  border-style: solid;
-  border-width: 0 1px 1px 1px;
-  border-radius: 5px;
-  border-spacing: 0;
-  display: table;
-  overflow: auto;
+.table-container {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
   width: 100%;
-  thead {
-    th {
-      color: white;
-      background-color: black;
-      font-weight: bold;
-      font-size: 0.8em;
-      padding: 5px 10px;
-      vertical-align: bottom;
-    }
+  height: 100vh;
 
-    th:first-child {
-      border-top-left-radius: 5px;
-    }
+  table {
+    width: 100%;
+    height: 240px;
+    margin: 0 auto; // Centrar la tabla
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
 
-    th:last-child {
-      border-top-right-radius: 5px;
+  // Estilo para las acciones de la tabla
+  table tbody>tr>td:last-child {
+    width: 120px;
+    border-left: 1px solid $primary-color;
+  }
+
+  // Estilo para las celdas de la tabla
+  table tbody>tr>td {
+    padding: 0 10px;
+    text-align: center;
+
+    body.dark & {
+      background-color: map-get($dark-theme, nav-bg-color);
+      color: map-get($dark-theme, fg-color);
     }
   }
 
-  tbody {
-    td {
-      border-top: 1px solid gray;
-      padding: 5px 10px;
-      vertical-align: top;
-    }
+  // Estilo para las filas de la tabla
+  table tbody>tr {
+    background-color: #fff;
+    transition: background-color 0.3s;
 
-    tr:nth-child(2n) {
-      background-color: lightgray;
+    &:hover {
+      background-color: $gold;
     }
   }
+
+  // Estilo para las cabeceras de la tabla
+  table thead>tr>th {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid $primary-color;
+  }
+
+  // Estilo para los botones de la tabla
+  .btn {
+    padding: 4px 5px;
+    margin-left: 5px;
+
+    // Si el ancho de la pantalla es menor a 768px
+    @include media-breakpoint-down(sm) {
+      margin-left: 0;
+      margin-top: 3px;
+    }
+
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color;
+    color: $white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border: none;
+
+    &:hover {
+      background-color: $primary-color;
+      border: none;
+    }
+  }
+
+    // Estilo para los mostrar colores dentro de la tabla
+    .table-color {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px auto 0 auto;
+      width: 40%;
+      border-radius: 4px;
+    }
 }

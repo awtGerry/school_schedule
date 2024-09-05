@@ -22,7 +22,7 @@
 
   {#each hours as hour}
     <div class="header">{hour}</div>
-    {#each days as day}
+    {#each days as _day}
       <div>
       </div>
     {/each}
