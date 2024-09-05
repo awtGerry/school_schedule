@@ -15,10 +15,12 @@ async fn main() {
             create_subject,
             get_subjects
         ])
+        .plugin(tauri_plugin_store::Builder::default().build())
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
 
     let pool = connect(&app).await;
     app.manage(AppState { db: pool });
+    // app.handle().plugin(tauri_plugin_store::Builder::default().build());
     app.run(|_, _| {});
 }

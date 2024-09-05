@@ -31,3 +31,38 @@
     color: map-get($dark-theme, fg-color);
   }
 }
+
+// Contentenedor para las materias.
+.subjects-container {
+  display: flex;
+  flex-direction: column;
+
+  .items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .subject {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    min-width: 100px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f6c177;
+    }
+
+    body.dark & {
+      background-color: map-get($dark-theme, nav-bg-color);
+      color: map-get($dark-theme, fg-color);
+    }
+  }
+}

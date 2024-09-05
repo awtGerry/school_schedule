@@ -1,5 +1,8 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api";
+  import { loadSubjects } from "$lib/modules/entities/subjectsStore";
+  import { emit } from "@tauri-apps/api/event";
+
   let name = "";
   let shorten = "";
   let color = "";
@@ -11,9 +14,9 @@
       alert("Por favor, rellene todos los campos");
       return;
     }
-    console.log("Adding subject");
     await invoke("create_subject", { name, shorten, color, spec });
-    console.log("Subject added");
+    await loadSubjects(); // Recarga las materias
+    await emit("subjects_updated"); // Emite un evento para actualizar la vista de materias
   }
 </script>
 

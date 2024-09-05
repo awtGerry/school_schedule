@@ -1,3 +1,13 @@
+// Mixin para el tema
 @mixin theme($property, $key) {
   #{$property}: map-get($theme, $key);
 }
+
+// Mixin para cambiar la fuente si el color de fondo es oscuro
+/* @mixin color-contrast($color) { */
+/*   @if (lightness($color) > 50) { */
+/*     color: $black; */
+/*   } @else { */
+/*     color: $white; */
+/*   } */
+/* } */
